@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% set active_page = "node_info" %} 
+{% block content %}
+<html lang="zh-cn">
+
+
+
+<div>
+<h2>Node info</h2>
+
+<table class="dataintable"
+border = "1"
+bdcolor = "gray">
+<tr>
+<th>Running Nodes</th>
+</tr>
+
+<tr>
+<td>
+    {% for nodes in rosnodes %}
+      <li style="list-style-type:none">{{nodes}}</li>
+    {% endfor %}
+    
+</td>
+
+</tr>
+
+</table>
+
+<td><button onclick="javascript:window.location.href='/node_info';">Refresh</button></td> 
+</div>
+</html>
+{% endblock %}

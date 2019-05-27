@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% set active_page = "images" %} 
+{% block content %}
+<html lang="zh-cn">
+<div>
+<h1><span style="color:blue;">Image name:</span> {{ imagename }}</h1>
+
+</div>
+<HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="80%" color=#987cb9 SIZE=10>
+<HR style="border:3 double #987cb9" width="80%" color=#987cb9 SIZE=3>
+<div>
+
+<h2>Uploading Information</h2>
+<div>
+<table class="dataintable uploading information" border = "1">
+  <tr>
+  <th style="width:33%;">File Name</th>
+  <th style="width:33%;">Uploader</th>
+  <th style="width:34%;">Uploading Time</th>
+  </tr>
+  <tr>
+      <td >{{uploadname}}</td>						
+      <td >{{uploaduser}}</td>
+      <td >{{uploadtime}}</td>
+			
+  </tr>
+</table>
+</div>
+
+{% if typ == 'GitRepository' and branches  %}
+<h2>Git Controlls</h2>
+<form method="post">
+  <div>
+    <label for="branch">Branch:</label>
+    <select name="dropdown">
+      {% for branch in branches %}
+    
+      {% if active_branch == branch %}
+      <option  value="{{branch}}" selected>{{branch}}</option>
+      {% else %}
+      <option  value="{{branch}}" >{{branch}}</option>
+      {% endif %}
+      {% endfor %}
+    </select>
+    <input type="submit"  value="Checkout Branch" formaction="/checkoutBranch/{{imagename}}"><br>
+  </div>
+</form>
+<button onclick="javascript:window.location.href='/pull/{{imagename}}';">Git Pull</button> 
+
+
+{% endif  %}
+
+
+<HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="80%" color=#987cb9 SIZE=3>
+
+
+<div>
+<h2>Directions for use</h2>
+<table class="dataintable using information" border = "1">
+  <tr>
+  <th style="width:20%;">Launch File</th>
+  <th style="width:30%;">Arguments</th>
+  <th style="width:30%;">Actions</th>
+  </tr>
+ 
+ 
+  {% set ns  = namespace(found=false) %}
+  {% for stopic in subscribed_topics %}
+  <tr>
+      <td >
+        	<li style="list-style-type:none"><b>{{stopic}}</b></li>	
+      </td>	
+
+      <td>
+        <form method="post">
+          
+            {% for arg in args %}
+            {% if arg.service == stopic and args%}
+            <li style="list-style-type:none"></li>
+              <label for="Topic Name">{{arg.arg}}
+                <input id='args' name="{{arg.arg}}{{stopic}}" type="text" >
+              </label>
+            </li>
+            {% endif %}
+          {% endfor %}
+          
+
+
+
+
+
+          <!---  {% if ns.found == false and args%}
+              {% for arg in args %}
+                <li style="list-style-type:none"></li>
+                  <label for="Topic Name">{{arg}}
+                    <input id='args' name="{{arg}}" type="text" >
+                  </label>
+                </li>
+              {% endfor %}
+            {% endif %}
+            {% set ns.found = true %}-->
+      </td> 
+
+      <td>
+          <li style="list-style-type:none"> 
+            <input type="submit"  value="Start {{stopic}}" formaction="/start/{{ imagename }}/{{stopic}}">
+          </li>
+          {% endfor %}
+        </form>
+      </td>
+</tr> 
+        
+  
+   
+ 
+</table>
+
+
+
+<HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="80%" color=#987cb9 SIZE=3>
+
+<h2>Functional description</h2>
+<div>
+	<p>{{comments}}</p>
+</div>
+
+<HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="80%" color=#987cb9 SIZE=3>
+
+
+<div>
+	<button onclick="javascript:window.location.href='/download/{{ imagename }}';">Download</button> 
+  <button onclick="javascript:window.location.href='/delete/{{ imagename }}';">Delete Image</button> 
+  <button onclick="javascript:window.location.href='/build/{{ package_name }}';">Build Image</button> 
+         
+</div>
+<div id="hiding">
+  {% if succeed == True %}
+  <div class="alert alert-success" role="alert">
+    <b>OK:</b> Succeeded to Start {{node_name}} <b></b></b>.
+  </div>
+ {% elif succeed == False %}  
+  <div class="alert alert-danger" role="alert">
+    <b>Error:</b> Failed to Start {{node_name}} {{error_Message}} <b></b></b>.
+  </div>
+ {% endif %}
+
+</div>
+</html>
+{% endblock %}

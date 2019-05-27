@@ -1,0 +1,11 @@
+pre {
+  font-family: Menlo, Consolas, 'DejaVu Sans Mono';
+  font-size: 0.8em;
+}
+.status_green { 
+  color: green;
+}
+
+.status_red { 
+  color: red;
+}

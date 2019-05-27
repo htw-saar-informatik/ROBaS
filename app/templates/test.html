@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% set active_page = "logs" %} 
+{% block content %}
+<html lang="zh-cn">
+<meta charset="utf-8"/>
+
+
+<div>
+<h2>{{service_name}} logs</h2>
+<textarea rows="35" cols="150">
+    {{text}} 
+</textarea>
+
+
+
+</div>
+<div id="hiding">
+    {% if succeed == True %}
+      <div class="alert alert-success" role="alert">
+        <b>OK:</b> Succeeded to Start master <b></b></b>.
+      </div>
+    {% elif succeed == False %}  
+    <div class="alert alert-success" role="alert">
+        <b>OK:</b> Succeeded to Stop master <b></b></b>.
+      </div>
+    {% endif %}
+  </div>
+</html>
+{% endblock %}

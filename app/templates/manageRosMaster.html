@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% set active_page = "master" %} 
+{% block content %}
+<html lang="zh-cn">
+
+
+
+<div>
+<h2>Manage Ros Master</h2>
+
+<table class="dataintable"
+border = "1"
+bdcolor = "gray">
+<tr>
+<th>Master Status</th>
+<th>Master Address</th>
+</tr>
+<tr>
+    <td>  
+        {% if status == True %}
+          <font class="status_green">{{status}}</font>
+        {% elif status == False %}  
+          <font class="status_red">{{status}}</font>
+        {% endif %}
+    </td>
+    <td>
+       {{address}}
+    </td>
+</tr>
+
+
+  
+ 
+
+
+</table>
+<td><button onclick="javascript:window.location.href='/master/{{ status }}';">Start/Stop Master</button></td> 
+<td><button onclick="javascript:window.location.href='/master';">Refresh</button></td> 
+</div>
+<div id="hiding">
+    {% if succeed == True %}
+      <div class="alert alert-success" role="alert">
+        <b>OK:</b> Succeeded to Start master <b></b></b>.
+      </div>
+    {% elif succeed == False %}  
+    <div class="alert alert-success" role="alert">
+        <b>OK:</b> Succeeded to Stop master <b></b></b>.
+      </div>
+    {% endif %}
+  </div>
+</html>
+{% endblock %}
